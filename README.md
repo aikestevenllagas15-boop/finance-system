@@ -87,7 +87,6 @@ object the API returns, so it always reflects the exact committed record
 | POST | `/api/transactions` | Validate → commit a new payment |
 | PATCH | `/api/transactions/:id/void` | Void an active transaction |
 | GET | `/api/students` | List all students (Manage Students screen) |
-| POST | `/api/students` | Add a student record |
 | DELETE | `/api/students/:studentNo` | Remove a student record (transaction history is untouched) |
 | POST | `/api/sync/enrollment` | Record an official enrollment from the combined Enrollment system |
 | GET | `/api/sync/summary` | Approved summary synced to the Central Server |

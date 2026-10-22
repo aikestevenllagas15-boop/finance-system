@@ -1,7 +1,6 @@
 // src/routes/students.js
 //   GET    /api/students            list all students (Manage Students screen)
 //   GET    /api/students/:query     verify identity/program/status before payment
-//   POST   /api/students            add a student to Finance's local record
 //   DELETE /api/students/:studentNo remove a student's record
 //
 // Hub lookups refresh Finance's local copy; transactions retain a stable
@@ -15,8 +14,6 @@ import { db } from "../db.js";
 import { getHubStudent } from "../integrations/it-department.js";
 
 const router = Router();
-
-const STATUSES = ["Active", "On Leave", "Graduated", "Unverified"];
 
 router.get("/", (req, res) => {
   const rows = db.prepare("SELECT * FROM students ORDER BY student_no").all();
@@ -60,40 +57,6 @@ router.get("/:query", async (req, res, next) => {
     }
     next(error);
   }
-});
-
-router.post("/", (req, res) => {
-  const { studentNo, name, program, yearLevel, status, discountEligibility } = req.body || {};
-
-  const errors = [];
-  if (!studentNo || !String(studentNo).trim()) errors.push("studentNo is required.");
-  if (!name || !String(name).trim()) errors.push("name is required.");
-  if (!program || !String(program).trim()) errors.push("program is required.");
-  if (!yearLevel || !String(yearLevel).trim()) errors.push("yearLevel is required.");
-  if (status && !STATUSES.includes(status)) errors.push(`status must be one of: ${STATUSES.join(", ")}`);
-
-  if (studentNo) {
-    const dup = db.prepare("SELECT student_no FROM students WHERE student_no = ?").get(String(studentNo).trim());
-    if (dup) errors.push(`Student number "${studentNo}" already exists.`);
-  }
-
-  if (errors.length) return res.status(422).json({ errors });
-
-  const row = {
-    student_no: String(studentNo).trim(),
-    name: String(name).trim(),
-    program: String(program).trim(),
-    year_level: String(yearLevel).trim(),
-    status: status || "Active",
-    discount_eligibility: discountEligibility || "None",
-  };
-
-  db.prepare(
-    `INSERT INTO students (student_no, name, program, year_level, status, discount_eligibility)
-     VALUES (@student_no, @name, @program, @year_level, @status, @discount_eligibility)`
-  ).run(row);
-
-  res.status(201).json(row);
 });
 
 router.delete("/:studentNo", (req, res) => {

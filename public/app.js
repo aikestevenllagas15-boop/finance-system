@@ -417,7 +417,7 @@ setInterval(() => {
   if (!$("#app-screen").classList.contains("hidden")) loadLedger();
 }, 30000);
 
-/* ---------------- MANAGE STUDENTS (real GET/POST/DELETE /api/students) ---------------- */
+/* ---------------- MANAGE STUDENTS (real GET/DELETE /api/students) ---------------- */
 let studentCache = [];
 
 async function loadStudents() {
@@ -484,36 +484,6 @@ async function doDeleteStudent(studentNo) {
     toast(err.message, "error");
   }
 }
-
-$("#add-student-btn").addEventListener("click", async () => {
-  const payload = {
-    studentNo: $("#s-studentNo").value.trim(),
-    name: $("#s-name").value.trim(),
-    program: $("#s-program").value.trim(),
-    yearLevel: $("#s-yearLevel").value.trim(),
-    status: $("#s-status").value,
-    discountEligibility: $("#s-discountEligibility").value,
-  };
-  const errEl = $("#student-errors");
-  const btn = $("#add-student-btn");
-  btn.disabled = true;
-  btn.textContent = "Adding…";
-  try {
-    await api("/api/students", { method: "POST", body: JSON.stringify(payload) });
-    errEl.classList.add("hidden");
-    ["#s-studentNo", "#s-name", "#s-program", "#s-yearLevel"].forEach((id) => ($(id).value = ""));
-    $("#s-status").value = "Active";
-    $("#s-discountEligibility").value = "None";
-    toast(`Student ${payload.studentNo} added.`, "success");
-    loadStudents();
-  } catch (err) {
-    errEl.innerHTML = (err.payload?.errors || [err.message]).map((e) => `<li>✕ ${e}</li>`).join("");
-    errEl.classList.remove("hidden");
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Add Student";
-  }
-});
 
 $("#student-search").addEventListener("input", (e) => renderStudentList(e.target.value.trim()));
 
