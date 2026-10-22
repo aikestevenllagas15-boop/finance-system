@@ -5,12 +5,14 @@
 // the route interfaces.
 
 import { DatabaseSync } from "node:sqlite";
+import { mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, "..", "data", "finance.db");
 
+mkdirSync(path.dirname(DB_PATH), { recursive: true });
 export const db = new DatabaseSync(DB_PATH);
 
 db.exec(`
