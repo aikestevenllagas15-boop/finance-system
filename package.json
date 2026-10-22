@@ -1,0 +1,19 @@
+{
+  "name": "finance-system",
+  "version": "1.0.0",
+  "description": "Finance System module — tuition assessment, payment processing & transaction ledger. Capstone component of the Distributed Enterprise Integration Architecture (CSFJ).",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node src/db.js --seed"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

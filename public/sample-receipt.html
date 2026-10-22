@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sample Receipt — OR-000123</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #f6f7fb;
+      color: #111827;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+    .page {
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 26px 22px 18px;
+      border: 1px solid #dfe5ef;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 28px rgba(19, 34, 87, 0.08);
+    }
+    .toolbar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 16px; }
+    button {
+      padding: 8px 12px;
+      border: 1px solid #132257;
+      border-radius: 8px;
+      background: #132257;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button.secondary { background: #fff; color: #132257; }
+    .sample {
+      margin: 0 0 12px;
+      color: #a3212f;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+    .center { text-align: center; }
+    h1 { margin: 0 0 2px; color: #132257; font-size: 16px; }
+    .sub { margin: 0 0 14px; color: #555; font-size: 10.5px; letter-spacing: 0.06em; }
+    .divider { margin: 12px 0; border-top: 1px dashed #9ea8ba; }
+    .row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
+    .row span:first-child { color: #586274; }
+    .row span:last-child { font-weight: 700; text-align: right; }
+    .amount { font-size: 18px; font-weight: 800; }
+    .status { margin-top: 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-align: center; }
+    .sig { display: flex; gap: 20px; justify-content: space-between; margin-top: 26px; font-size: 10.5px; }
+    .sig div { flex: 1; padding-top: 4px; border-top: 1px solid #27314b; text-align: center; }
+    .footer { margin-top: 20px; color: #777; font-size: 10px; text-align: center; }
+    @media print {
+      body { padding: 0; background: #fff; }
+      .page { max-width: 100%; border: 0; border-radius: 0; box-shadow: none; }
+      .toolbar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="toolbar">
+      <button type="button" onclick="window.print()">Print Receipt</button>
+      <button type="button" class="secondary" onclick="const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html;charset=utf-8' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'sample-receipt-OR-000123.html'; link.click(); URL.revokeObjectURL(link.href);">Download Receipt</button>
+    </div>
+
+    <p class="sample">SAMPLE — FOR PREVIEW ONLY</p>
+    <header class="center">
+      <h1>Colegio de San Francisco Javier of Rizal</h1>
+      <p class="sub">OFFICIAL RECEIPT — ACCOUNTING OFFICE</p>
+    </header>
+
+    <div class="divider"></div>
+    <div class="row"><span>TXN ID</span><span>COL000123</span></div>
+    <div class="row"><span>Date</span><span>Oct 16, 2026, 7:00 AM</span></div>
+    <div class="divider"></div>
+    <div class="row"><span>Student</span><span>Juan Dela Cruz</span></div>
+    <div class="row"><span>Student No.</span><span>CSFJ-2026-0001</span></div>
+    <div class="row"><span>Program</span><span>BSIT</span></div>
+    <div class="divider"></div>
+    <div class="row"><span>Fee type</span><span>Tuition Fee</span></div>
+    <div class="row"><span>Method</span><span>Cash</span></div>
+    <div class="row"><span>O.R. number</span><span>OR-000123</span></div>
+    <div class="row"><span>Term</span><span>1st Sem, S.Y. 2026-2027</span></div>
+    <div class="divider"></div>
+    <div class="row"><span>Gross amount</span><span>₱15,000.00</span></div>
+    <div class="row"><span>Discount</span><span>Working Scholar (50%) −₱7,500.00</span></div>
+    <div class="row amount"><span>Net amount</span><span>₱7,500.00</span></div>
+    <div class="status">STATUS: PAID</div>
+
+    <div class="sig">
+      <div>Maria Santos<br />Processed by (Accounting)</div>
+      <div>Pedro Reyes<br />Verified by (Registrar)</div>
+    </div>
+
+    <footer class="footer">Sample receipt · Finance System · CSFJ</footer>
+  </main>
+</body>
+</html>
