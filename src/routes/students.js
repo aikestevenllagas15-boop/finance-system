@@ -48,7 +48,14 @@ router.get("/:query", async (req, res, next) => {
          program = excluded.program,
          year_level = excluded.year_level,
          status = excluded.status`
-    ).run(student);
+    ).run({
+      student_no: student.student_no,
+      name: student.name,
+      program: student.program,
+      year_level: student.year_level,
+      status: student.status,
+      discount_eligibility: student.discount_eligibility,
+    });
 
     res.json({ source: "it-department-hub", student });
   } catch (error) {
