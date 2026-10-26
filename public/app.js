@@ -330,7 +330,7 @@ async function loadLedger() {
     const data = await api("/api/transactions");
     ledgerCache = data.transactions;
     renderStats();
-    $("#stat-expected").textContent = data.expectedTransactionCount;
+    $("#stat-expected").textContent = peso(data.expectedCollectedAmount);
     renderLedgerList($("#ledger-search").value.trim());
   } catch (err) {
     toast(err.message, "error");

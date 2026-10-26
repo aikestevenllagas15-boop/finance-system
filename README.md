@@ -80,6 +80,8 @@ object the API returns, so it always reflects the exact committed record
 
 | Method | Route | Purpose |
 |---|---|---|
+| GET | `/api/db-check` | Database readiness check used by the IT Department Hub registration |
+| GET | `/api/health` | Application health check |
 | GET | `/api/students/:query` | Verify identity/program/status before payment |
 | GET | `/api/transactions` | Ledger list, `?search=` and `?status=` filters |
 | GET | `/api/transactions/:id` | One transaction |
@@ -92,13 +94,15 @@ object the API returns, so it always reflects the exact committed record
 | GET | `/api/sync/summary` | Approved summary synced to the Central Server |
 
 O.R. numbers are generated sequentially by the server when a transaction is
-committed; staff do not need to enter or request a number. The ledger's **Expected transactions** count is the number of transaction
-records already in the ledger plus each officially enrolled student/term that
-does not yet have a non-voided transaction. The combined Enrollment system
-should send a JSON request to `POST /api/sync/enrollment` with
+committed; staff do not need to enter or request a number. The ledger's
+**Expected collected** figure sums the gross assessed amounts from all
+non-voided transactions, including paid and pending entries, before discounts
+and without subtracting payments already received. Enrollments without a
+recorded assessment are not included because the Finance system does not yet
+receive per-student fee assessments. The combined Enrollment system can send
+a JSON request to `POST /api/sync/enrollment` with
 `{ "studentNo": "...", "term": "1st Sem, S.Y. 2025-2026" }`. Repeated events
-for the same student and term are idempotent, and a committed transaction
-reduces the outstanding expected count. The ledger refreshes this figure
+for the same student and term are idempotent. The ledger refreshes this figure
 automatically every 30 seconds.
 
 Transactions require a successful student lookup. If the student is not found,

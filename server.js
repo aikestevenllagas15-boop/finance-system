@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import studentsRouter from "./src/routes/students.js";
 import transactionsRouter from "./src/routes/transactions.js";
 import syncRouter from "./src/routes/sync.js";
+import { db } from "./src/db.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -23,6 +24,10 @@ app.use("/api/transactions", transactionsRouter);
 app.use("/api/sync", syncRouter);
 
 app.get("/api/health", (req, res) => res.json({ ok: true, service: "finance-system", time: new Date().toISOString() }));
+app.get("/api/db-check", (req, res) => {
+  db.prepare("SELECT 1").get();
+  res.json({ ok: true, service: "finance-system" });
+});
 
 // ---- static UI ----
 app.use(express.static(path.join(__dirname, "public")));

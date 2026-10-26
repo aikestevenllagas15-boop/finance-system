@@ -50,10 +50,14 @@ router.get("/", (req, res) => {
        WHERE t.student_no = e.student_no AND t.term = e.term AND t.status != 'Voided'
      )`
   ).get().n;
+  const expectedCollectedAmount = db.prepare(
+    "SELECT COALESCE(SUM(gross_amount), 0) AS n FROM transactions WHERE status != 'Voided'"
+  ).get().n;
 
   res.json({
     count: rows.length,
     expectedTransactionCount: transactionCount + outstandingEnrollments,
+    expectedCollectedAmount,
     transactions: rows,
   });
 });
